@@ -1,12 +1,11 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
-from PyQt5.QtCore import Qt, QRect, QPoint, QTimer, QTime
+from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
 
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.last_frame_time = QTime.currentTime()
         self.square_size = 50
         self.dragging = False
         self.transparent = False
@@ -21,9 +20,6 @@ class MainWindow(QWidget):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.showFullScreen()
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.showFPS)
-        self.timer.start(1000)
 
     def paintEvent(self, event):
         qp = QPainter()
@@ -79,9 +75,6 @@ class MainWindow(QWidget):
 
         if event.key() == Qt.Key_Escape:
             self.close()
-
-    def showFPS(self):
-        current_time = QTime.currentTime()
 
 def main():
     app = QApplication(sys.argv)
